@@ -1,9 +1,39 @@
-export default function Game(){
+'use client'
+import React, { useEffect, useState } from "react";
+
+export default function Game() {
+    const [palavra, setPalavra] = useState<string[]>([]);
+
+    useEffect(() => {
+        fetch('../Words.json')
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Erro ao carregar os dados');
+            }
+            return res.json();
+        })
+        .then((data: { palavra: string[] }) => {
+            const words: string[] = data.palavra; 
+            setPalavra(words); 
+        })
+        .catch((error) => {
+            console.error('Erro ao carregar as palavras:', error);
+        });
+    }, []);
+    const arrays = (numero: number) =>{
+      const letra:string[][] = palavra.map((palavra) => palavra.split(''));
+      return console.log(letra[numero])
+    }
+    arrays(Math.floor(Math.random() * 20))
+    
+    
     return(
         <>
         <h1>Qual a palavra ?</h1>
+        <p>{}</p>
         <form action="">
             <input type="text" disabled/>
+            
         </form>
 
         <form action="">
